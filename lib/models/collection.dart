@@ -1,5 +1,5 @@
-import 'package:pokemon_tcg/pokemon_tcg.dart';
+import 'card.dart';
 
 class Collection {
-  final List<PokemonCard> cardList = [];
+  final List<Card> cardList = [];
 }
