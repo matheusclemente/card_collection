@@ -3,7 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class CardService {
-  final String apiUrl = 'https://api.tcgdex.net/v2/en/cards';
+  final String apiUrl =
+      'https://api.tcgdex.net/v2/en/cards?pagination:page=1&pagination:itemsPerPage=50&image=notnull:';
 
   Future<List<CollectibleCard>> fetchCards() async {
     final response = await http.get(Uri.parse(apiUrl));
