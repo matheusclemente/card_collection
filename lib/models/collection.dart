@@ -1,5 +1,5 @@
-import 'card.dart';
+import 'collectible_card.dart';
 
 class Collection {
-  final List<Card> cardList = [];
+  final List<CollectibleCard> cardList = [];
 }
