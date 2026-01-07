@@ -6,14 +6,14 @@ class CollectibleCard {
 
   CollectibleCard({
     required this.id,
-    required this.image,
+    this.image = "",
     required this.name,
     this.illustrator = 'Unknown',
   });
 
   CollectibleCard.fromJson(Map<String, dynamic> json)
       : id = json['id'] as String,
-        image = json['image'] as String,
+        image = json['image'] as String? ?? "",
         name = json['name'] as String,
         illustrator = json['illustrator'] as String? ?? 'Unknown';
 
@@ -23,4 +23,6 @@ class CollectibleCard {
         'name': name,
         'illustrator': illustrator,
       };
+
+  String get imageUrl => '$image/low.webp';
 }

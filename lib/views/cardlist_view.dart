@@ -9,12 +9,12 @@ class CardListView extends StatelessWidget {
       create: (_) => CardListViewModel()..loadCards(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Collectible Cards'),
+          title: const Text('Collectible Cards'),
         ),
         body: Consumer<CardListViewModel>(
           builder: (context, viewModel, child) {
             if (viewModel.isLoading) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
 
             if (viewModel.errorMessage != null) {
@@ -30,9 +30,18 @@ class CardListView extends StatelessWidget {
               itemCount: viewModel.cards.length,
               itemBuilder: (context, index) {
                 final card = viewModel.cards[index];
-                return ListTile(
-                  title: Text(card.name),
-                  subtitle: Text(card.image),
+                return GridTile(
+                  footer: GridTileBar(
+                    backgroundColor: Colors.black54,
+                    title: Text(card.name),
+                  ),
+                  child: Image.network(
+                    card.imageUrl,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Center(
+                          child: Icon(Icons.image_not_supported));
+                    },
+                  ),
                 );
               },
             );
