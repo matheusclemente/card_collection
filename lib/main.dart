@@ -2,6 +2,7 @@ import 'views/cardlist_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'viewmodels/cardlist_viewmodel.dart';
+import 'viewmodels/carddetails_viewmodel.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,8 +16,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => CardListViewModel()),
+        ChangeNotifierProvider(create: (_) => CardDetailsViewModel()),
       ],
-      child: MaterialApp(
+      child: const MaterialApp(
         home: CardListView(),
       ),
     );

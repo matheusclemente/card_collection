@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/collectible_card.dart';
+import '../viewmodels/carddetails_viewmodel.dart';
 
 class CardDetailsView extends StatelessWidget {
   final CollectibleCard card;
@@ -8,15 +10,16 @@ class CardDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(card.name),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+    return ChangeNotifierProvider(
+      create: (context) => CardDetailsViewModel()..loadCardDetails(card.id),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(card.name),
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Image.network(
               card.imageUrlHighRes,
               loadingBuilder: (context, child, loadingProgress) {
@@ -35,8 +38,44 @@ class CardDetailsView extends StatelessWidget {
               },
             ),
             const SizedBox(height: 16),
-            Text('Illustrator: ${card.illustratorName}'),
-          ],
+            Consumer<CardDetailsViewModel>(
+              builder: (context, viewModel, child) {
+                if (viewModel.isLoading) {
+                  return const Column(children: [
+                    Text("Loading Details..."),
+                    LinearProgressIndicator()
+                  ]);
+                }
+
+                if (viewModel.errorMessage != null) {
+                  return Center(
+                      child: Text('Error: ${viewModel.errorMessage}'));
+                }
+
+                return Column(
+                  children: [
+                    Row(
+                      children: [
+                        const Text("Illustrator: "),
+                        TextButton(
+                            onPressed: () {},
+                            child:
+                                Text(viewModel.card?.illustratorName ?? '---')),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Text("Set: "),
+                        TextButton(
+                            onPressed: () {},
+                            child: Text(viewModel.card?.set?.name ?? '---')),
+                      ],
+                    ),
+                  ],
+                );
+              },
+            ),
+          ]),
         ),
       ),
     );
