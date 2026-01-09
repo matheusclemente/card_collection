@@ -8,67 +8,64 @@ class CardListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => CardListViewModel()..loadCards(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Collectible Cards'),
-        ),
-        body: Consumer<CardListViewModel>(
-          builder: (context, viewModel, child) {
-            if (viewModel.isLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Collectible Cards'),
+      ),
+      body: Consumer<CardListViewModel>(
+        builder: (context, viewModel, child) {
+          if (viewModel.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-            if (viewModel.errorMessage != null) {
-              return Center(child: Text('Error: ${viewModel.errorMessage}'));
-            }
+          if (viewModel.errorMessage != null) {
+            return Center(child: Text('Error: ${viewModel.errorMessage}'));
+          }
 
-            return GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8,
-              ),
-              itemCount: viewModel.cards.length,
-              itemBuilder: (context, index) {
-                final card = viewModel.cards[index];
-                return InkWell(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CardDetailsView(card: card),
-                    ),
+          return GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 8,
+            ),
+            itemCount: viewModel.cards.length,
+            itemBuilder: (context, index) {
+              final card = viewModel.cards[index];
+              return InkWell(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CardDetailsView(card: card),
                   ),
-                  child: GridTile(
-                    footer: GridTileBar(
-                      backgroundColor: Colors.black54,
-                      title: Text(card.name),
-                    ),
-                    child: Image.network(
-                      card.imageUrl,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                : null,
-                          ),
-                        );
-                      },
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Center(
-                            child: Icon(Icons.image_not_supported));
-                      },
-                    ),
+                ),
+                child: GridTile(
+                  footer: GridTileBar(
+                    backgroundColor: Colors.black54,
+                    title: Text(card.name),
                   ),
-                );
-              },
-            );
-          },
-        ),
+                  child: Image.network(
+                    card.imageUrl,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                              : null,
+                        ),
+                      );
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Center(
+                          child: Icon(Icons.image_not_supported));
+                    },
+                  ),
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }

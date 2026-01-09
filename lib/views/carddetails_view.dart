@@ -57,18 +57,21 @@ class CardDetailsView extends StatelessWidget {
                     Row(
                       children: [
                         const Text("Illustrator: "),
-                        TextButton(
-                            onPressed: () {},
-                            child:
-                                Text(viewModel.card?.illustratorName ?? '---')),
+                        viewModel.card?.illustratorName != null
+                            ? TextButton(
+                                onPressed: () {},
+                                child: Text(viewModel.card!.illustratorName!))
+                            : const Text('---'),
                       ],
                     ),
                     Row(
                       children: [
                         const Text("Set: "),
-                        TextButton(
-                            onPressed: () {},
-                            child: Text(viewModel.card?.set?.name ?? '---')),
+                        viewModel.card?.set?.name != null
+                            ? TextButton(
+                                onPressed: () {},
+                                child: Text(viewModel.card!.set!.name))
+                            : const Text('---'),
                       ],
                     ),
                   ],

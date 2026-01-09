@@ -29,5 +29,5 @@ class CollectibleCard {
 
   String get imageUrl => image != null ? '$image/low.webp' : '';
   String get imageUrlHighRes => image != null ? '$image/high.webp' : '';
-  String get illustratorName => illustrator ?? '---';
+  String? get illustratorName => illustrator;
 }
