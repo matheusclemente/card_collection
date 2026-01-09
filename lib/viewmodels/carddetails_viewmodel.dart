@@ -1,6 +1,6 @@
-import 'package:card_collection/models/collectible_card.dart';
 import 'package:flutter/foundation.dart';
-import 'package:card_collection/services/card_service.dart';
+import '../models/collectible_card.dart';
+import '../services/card_service.dart';
 
 class CardDetailsViewModel extends ChangeNotifier {
   final CardService _cardService = CardService();

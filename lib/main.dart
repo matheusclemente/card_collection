@@ -1,6 +1,6 @@
-import 'views/cardlist_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'views/cardlist_view.dart';
 import 'viewmodels/cardlist_viewmodel.dart';
 import 'viewmodels/carddetails_viewmodel.dart';
 

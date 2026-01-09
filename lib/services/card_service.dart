@@ -1,8 +1,7 @@
-import 'package:card_collection/models/card_set.dart';
-
-import '../models/collectible_card.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:http/http.dart' as http;
+import '../models/card_set.dart';
+import '../models/collectible_card.dart';
 
 class CardService {
   final String baseApiUrl = 'https://api.tcgdex.net/v2/en';

@@ -1,4 +1,3 @@
-import 'package:card_collection/models/card_set.dart';
 import 'package:flutter/foundation.dart';
 import '../models/collectible_card.dart';
 import '../models/card_set.dart';
