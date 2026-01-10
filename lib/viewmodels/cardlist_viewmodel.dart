@@ -38,4 +38,34 @@ class CardListViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> loadCardsBySet(String setId) async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      _cards = await _cardService.fetchCardsBySet(setId);
+    } catch (e) {
+      _errorMessage = e.toString();
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> loadCardsByIllustrator(String illustrator) async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      _cards = await _cardService.fetchCardsByIllustrator(illustrator);
+    } catch (e) {
+      _errorMessage = e.toString();
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
 }

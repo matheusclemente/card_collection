@@ -52,4 +52,17 @@ class CardService {
       throw Exception('Failed to load cards for set $setId');
     }
   }
+
+  Future<List<CollectibleCard>> fetchCardsByIllustrator(
+      String illustrator) async {
+    final response = await http.get(Uri.parse(
+        '$baseApiUrl/cards?illustrator=eq:$illustrator&pagination:page=1&pagination:itemsPerPage=60'));
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonList = jsonDecode(response.body) as List<dynamic>;
+      return jsonList.map((json) => CollectibleCard.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load cards for illustrator $illustrator');
+    }
+  }
 }

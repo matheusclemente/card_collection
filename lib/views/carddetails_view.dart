@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/collectible_card.dart';
 import '../viewmodels/carddetails_viewmodel.dart';
+import '../viewmodels/cardlist_viewmodel.dart';
 
 class CardDetailsView extends StatelessWidget {
   final CollectibleCard card;
@@ -52,30 +53,50 @@ class CardDetailsView extends StatelessWidget {
                       child: Text('Error: ${viewModel.errorMessage}'));
                 }
 
-                return Column(
-                  children: [
-                    Row(
-                      children: [
-                        const Text("Illustrator: "),
-                        viewModel.card?.illustratorName != null
-                            ? TextButton(
-                                onPressed: () {},
-                                child: Text(viewModel.card!.illustratorName!))
-                            : const Text('---'),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        const Text("Set: "),
-                        viewModel.card?.set?.name != null
-                            ? TextButton(
-                                onPressed: () {},
-                                child: Text(viewModel.card!.set!.name))
-                            : const Text('---'),
-                      ],
-                    ),
-                  ],
-                );
+                return Consumer<CardListViewModel>(
+                    builder: (context, listViewModel, child) {
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          const Text("Illustrator: "),
+                          viewModel.card?.illustratorName != null
+                              ? TextButton(
+                                  onPressed: () {
+                                    listViewModel
+                                        .loadCardsByIllustrator(
+                                            viewModel.card!.illustratorName!)
+                                        .then((_) {
+                                      if (context.mounted) {
+                                        Navigator.pop(context);
+                                      }
+                                    });
+                                  },
+                                  child: Text(viewModel.card!.illustratorName!))
+                              : const Text('---'),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text("Set: "),
+                          viewModel.card?.set?.name != null
+                              ? TextButton(
+                                  onPressed: () {
+                                    listViewModel
+                                        .loadCardsBySet(viewModel.card!.set!.id)
+                                        .then((_) {
+                                      if (context.mounted) {
+                                        Navigator.pop(context);
+                                      }
+                                    });
+                                  },
+                                  child: Text(viewModel.card!.set!.name))
+                              : const Text('---'),
+                        ],
+                      ),
+                    ],
+                  );
+                });
               },
             ),
           ]),
