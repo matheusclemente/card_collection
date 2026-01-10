@@ -63,6 +63,7 @@ class CardDetailsView extends StatelessWidget {
                           viewModel.card?.illustratorName != null
                               ? TextButton(
                                   onPressed: () {
+                                    listViewModel.clearFilters();
                                     listViewModel
                                         .loadCardsByIllustrator(
                                             viewModel.card!.illustratorName!)
@@ -82,8 +83,9 @@ class CardDetailsView extends StatelessWidget {
                           viewModel.card?.set?.name != null
                               ? TextButton(
                                   onPressed: () {
+                                    listViewModel.clearFilters();
                                     listViewModel
-                                        .loadCardsBySet(viewModel.card!.set!.id)
+                                        .loadCardsBySet(viewModel.card!.set!)
                                         .then((_) {
                                       if (context.mounted) {
                                         Navigator.pop(context);
